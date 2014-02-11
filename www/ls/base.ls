@@ -61,6 +61,7 @@ container.append \div
     ..attr \class \content
     ..selectAll \div.cell .data cells .enter!append \div
         ..attr \class \cell
+        ..classed \empty (.players.length == 0)
         ..style \left -> "#{it.team.xIndex * cellSide}px"
         ..style \top  -> "#{it.source.yIndex * cellSide}px"
         ..attr \data-tooltip ->
