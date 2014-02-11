@@ -27,7 +27,10 @@ teams = d3.csv.parse ig.data.hokejisti, (row) ->
     team = nations_assoc[row['Tym']]
     {team, sources}
 cells = []
-nations .= sort (a, b) -> b.providesPlayers.length - a.providesPlayers.length
+nations .= sort (a, b) ->
+    | b.usesPlayers.length == 0 and a.usesPlayers.length > 0 => -1
+    | b.usesPlayers.length > 0 and a.usesPlayers.length == 0 => +1
+    | b.providesPlayers.length - a.providesPlayers.length => that
 xIndex = 0
 for nation, yIndex in nations
     nation.yIndex = yIndex
