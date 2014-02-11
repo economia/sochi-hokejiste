@@ -75,3 +75,10 @@ container.append \div
             ..attr \class -> "head ico #{it.abbr}"
             ..style \left -> "#{it.xIndex * cellSide}px"
             ..attr \data-tooltip (.name)
+container.append \div
+    ..attr \class \sider
+    ..selectAll \div.side .data nations
+        ..enter!append \div
+            ..attr \class -> "side ico #{it.abbr}"
+            ..style \top -> "#{it.yIndex * cellSide}px"
+            ..attr \data-tooltip (.name)

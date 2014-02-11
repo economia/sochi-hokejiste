@@ -14,8 +14,17 @@
     div.content
         position absolute
         top 22px
+        left 31px
+
+    div.sider
+        position absolute
+        top 22px
         left 0px
-        background #f00
+
+    div.header
+        position absolute
+        top 0px
+        left 31px
 
     div.cell
         position absolute
@@ -24,14 +33,21 @@
         border-radius 3px
 
     div.head
+    div.side
         position absolute
-        top 0px
         width 22px
         height 14px
-        margin-left 8px
         border 1px solid #ddd
         background-position center center
         background-repeat no-repeat
+
+    div.head
+        top 0px
+        margin-left 8px
+
+    div.side
+        left 0px
+        margin-top 11px
 
     for abbr in us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it
         .ico.{abbr}
