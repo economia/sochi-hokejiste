@@ -108,6 +108,8 @@ container.append \div
         ..style \left -> "#{it.team.xIndex * cellSide}px"
         ..style \top  -> "#{it.source.yIndex * cellSide}px"
         ..attr \data-tooltip ->
+            if it.players.length is 0
+                return void
             out = "<b>Reprezentanti #{it.team.name_of} hrající #{it.source.name_in}</b><br />"
             out += it.players.map (-> "#{it.name} (#{it.team})" ) .join "<br />" |> escape
             out
