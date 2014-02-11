@@ -9,6 +9,8 @@
 .ig
     width 998px
     height 800px
+    &.states
+        height 360px
     margin-top 20px
 
     div.content
@@ -31,20 +33,30 @@
         width 37px
         height 37px
         border-radius 3px
+        z-index 2
+        &:hover
+            cursor help
         &.empty
+            z-index 1
             border-top 1px dotted #ccc
             border-radius 0px
             width 39px
             margin-top -1px
+            &:hover
+                cursor default
 
     div.head
     div.side
         position absolute
-        width 22px
-        height 14px
-        border 1px solid #ddd
-        background-position center center
-        background-repeat no-repeat
+
+        &.ico
+            width 22px
+            height 14px
+            border 1px solid #ddd
+            background-position center center
+            background-repeat no-repeat
+        &.abbr
+            font-size 0.8em
 
     div.head
         top 0px

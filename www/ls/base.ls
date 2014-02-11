@@ -1,5 +1,32 @@
 new Tooltip!watchElements!
-teams_names = <[USA Kanada Rusko Švédsko Finsko Česko Slovensko Ukrajina Lotyšsko Bělorusko Dánsko Švýcarsko Německo Kazachstán Rakousko Norsko Francie Slovinsko Itálie]>
+teams_names =
+    \USA
+    \Kanada
+    \Rusko
+    \Švédsko
+    \Finsko
+    \Česko
+    \Slovensko
+    \Ukrajina
+    \Lotyšsko
+    \Bělorusko
+    \Dánsko
+    \Švýcarsko
+    \Německo
+    \Kazachstán
+    \Rakousko
+    \Norsko
+    \Francie
+    \Slovinsko
+    \Itálie
+    \NHL
+    \KHL
+    \ELI
+    \AHL
+    \NCAA
+    \NIC
+    \CZE
+    \SKE
 team_abbrs = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
 teams_in =
     "v USA"
@@ -21,6 +48,14 @@ teams_in =
     "ve Francii"
     "na Slovinsku"
     "v Itálii"
+    "v NHL"
+    "v KHL"
+    "v ELI"
+    "v AHL"
+    "v NCAA"
+    "kdoví kde"
+    "v České extralize"
+    "v Slovenské extralize"
 teams_of =
     "USA"
     "Kanady"
@@ -46,6 +81,7 @@ class Player
 class Nation
     (@name, index) ->
         @xIndex = null
+        @yIndex = null
         @usesPlayers = []
         @providesPlayers = []
         @abbr = team_abbrs[index]
@@ -57,10 +93,11 @@ draw = (type, sourceData, container) ->
         nations_assoc[team] = new Nation team, index
     teams = d3.csv.parse sourceData, (row) ->
         sources = for source in teams_names
+            row[source] ?= ""
             joudove = row[source].split ", "
             players = for jouda in joudove
                 [name, team] = jouda.replace ")" "" .split " ("
-                break unless name
+                continue unless name
                 player = new Player name, team
                 nations_assoc[source].providesPlayers.push player
                 nations_assoc[row['Tym']].usesPlayers.push player
@@ -69,18 +106,22 @@ draw = (type, sourceData, container) ->
             {players, source}
         team = nations_assoc[row['Tym']]
         {team, sources}
-    cells = []
+    nations .= filter -> it.providesPlayers.length or it.usesPlayers.length
     nations .= sort (a, b) ->
         | b.usesPlayers.length == 0 and a.usesPlayers.length > 0 => -1
         | b.usesPlayers.length > 0 and a.usesPlayers.length == 0 => +1
         | b.providesPlayers.length - a.providesPlayers.length => that
     xIndex = 0
-    for nation, yIndex in nations
-        nation.yIndex = yIndex
+    yIndex = 0
+    for nation in nations
+        if nation.providesPlayers.length
+            nation.yIndex = yIndex
+            ++yIndex
         if nation.usesPlayers.length
             nation.xIndex = xIndex
             ++xIndex
 
+    cells = []
     for {team, sources} in teams
         for {source, players} in sources
             cells.push {team, source, players}
@@ -121,12 +162,19 @@ draw = (type, sourceData, container) ->
                 ..attr \class -> "head ico #{it.abbr}"
                 ..style \left -> "#{it.xIndex * cellSide}px"
                 ..attr \data-tooltip (.name)
-    container.append \div
+    sider = container.append \div
         ..attr \class \sider
-        ..selectAll \div.side .data nations
+        ..selectAll \div.side .data nations.filter (.yIndex isnt null)
             ..enter!append \div
-                ..attr \class -> "side ico #{it.abbr}"
+                ..attr \class ->
+                    | type == \nations => "side ico #{it.abbr}"
+                    | otherwise => "side abbr"
                 ..style \top -> "#{it.yIndex * cellSide}px"
                 ..attr \data-tooltip (.name)
+                ..html ->
+                    | type == \nations => null
+                    | otherwise => it.name
 
 draw \nations ig.data.staty, ig.containers.base
+
+draw \teams ig.data.kluby, ig.containers.states
