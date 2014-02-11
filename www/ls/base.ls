@@ -107,7 +107,7 @@ container.append \div
         ..style \top  -> "#{it.source.yIndex * cellSide}px"
         ..attr \data-tooltip ->
             out = "<b>Reprezentanti #{it.team.name_of} hrající #{it.source.name_in}</b><br />"
-            out += it.players.map (.name) .join "<br />" |> escape
+            out += it.players.map (-> "#{it.name} (#{it.team})" ) .join "<br />" |> escape
             out
         ..style \background-color -> scale it.players.length
 container.append \div
