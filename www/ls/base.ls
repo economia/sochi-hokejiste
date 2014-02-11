@@ -49,5 +49,8 @@ container.selectAll \div.cell .data cells .enter!append \div
     ..attr \class \cell
     ..style \left -> "#{it.team.xIndex * cellSide}px"
     ..style \top  -> "#{it.source.yIndex * cellSide}px"
-    ..attr \data-tooltip -> it.players.map (.name) .join "<br />" |> escape
+    ..attr \data-tooltip ->
+        out = "<b>Hráči národního týmu #{it.team.name}, hrající běžně v #{it.source.name}</b><br />"
+        out += it.players.map (.name) .join "<br />" |> escape
+        out
     ..style \background-color -> scale it.players.length
