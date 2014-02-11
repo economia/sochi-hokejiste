@@ -1,5 +1,6 @@
 new Tooltip!watchElements!
 teams = <[USA Kanada Rusko Švédsko Finsko Česko Slovensko Ukrajina Lotyšsko Bělorusko Dánsko Švýcarsko Německo Kazachstán Rakousko Norsko Francie Slovinsko Itálie]>
+teams_flagh = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
 class Player
     (@name, @team) ->
 class Nation
@@ -15,6 +16,7 @@ teams = d3.csv.parse ig.data.hokejisti, (row) ->
         joudove = row[source].split ", "
         players = for jouda in joudove
             [name, team] = jouda.replace ")" "" .split " ("
+            break unless name
             player = new Player name, team
             nations_assoc[source].providesPlayers.push player
             nations_assoc[row['Tym']].usesPlayers.push player
@@ -38,19 +40,28 @@ for {team, sources} in teams
 
 cellSide = 40
 max = Math.max ...cells.map (.players.length)
-colorDomain = ['rgb(255,255,204)','rgb(255,237,160)','rgb(254,217,118)','rgb(254,178,76)','rgb(253,141,60)','rgb(252,78,42)','rgb(227,26,28)','rgb(189,0,38)','rgb(128,0,38)']
+colorRange = ['rgb(255,237,160)','rgb(254,217,118)','rgb(254,178,76)','rgb(253,141,60)','rgb(252,78,42)','rgb(227,26,28)','rgb(189,0,38)','rgb(128,0,38)']
+colorDomain = colorRange.map (d, i) -> max * i / (colorRange.length - 2)
+colorRange.unshift "rgb(255,255,255)"
+colorDomain.shift!
+colorDomain.unshift 1
+colorDomain.unshift 0
+
 scale = d3.scale.linear!
-    ..range colorDomain
-    ..domain colorDomain.map (d, i) -> max * i / (colorDomain.length - 1)
-console.log colorDomain.map (d, i) ->
-        max * i / (colorDomain.length - 1)
+    ..range colorRange
+    ..domain colorDomain
+
 container = d3.select  ig.containers.base
-container.selectAll \div.cell .data cells .enter!append \div
-    ..attr \class \cell
-    ..style \left -> "#{it.team.xIndex * cellSide}px"
-    ..style \top  -> "#{it.source.yIndex * cellSide}px"
-    ..attr \data-tooltip ->
-        out = "<b>Hráči národního týmu #{it.team.name}, hrající běžně v #{it.source.name}</b><br />"
-        out += it.players.map (.name) .join "<br />" |> escape
-        out
-    ..style \background-color -> scale it.players.length
+
+container
+    ..append \div
+        ..attr \class \content
+        ..selectAll \div.cell .data cells .enter!append \div
+            ..attr \class \cell
+            ..style \left -> "#{it.team.xIndex * cellSide}px"
+            ..style \top  -> "#{it.source.yIndex * cellSide}px"
+            ..attr \data-tooltip ->
+                out = "<b>#{it.team.name}, reprezentanti hrající ve #{it.source.name}</b><br />"
+                out += it.players.map (.name) .join "<br />" |> escape
+                out
+            ..style \background-color -> scale it.players.length
