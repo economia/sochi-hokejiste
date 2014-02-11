@@ -70,7 +70,7 @@ container.append \div
             out
         ..style \background-color -> scale it.players.length
 container.append \div
-    ..attr \class \header
+    ..attr \class \ig-header
     ..selectAll \div.head .data nations.filter (.xIndex isnt null)
         ..enter!append \div
             ..attr \class -> "head ico #{it.abbr}"
