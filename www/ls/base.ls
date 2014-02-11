@@ -1,17 +1,58 @@
 new Tooltip!watchElements!
 teams = <[USA Kanada Rusko Švédsko Finsko Česko Slovensko Ukrajina Lotyšsko Bělorusko Dánsko Švýcarsko Německo Kazachstán Rakousko Norsko Francie Slovinsko Itálie]>
 team_abbrs = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
+teams_in =
+    "v USA"
+    "v Kanadě"
+    "v Rusku"
+    "ve Švédsku"
+    "ve Finsku"
+    "v Česku"
+    "na Slovensku"
+    "na Ukrajině"
+    "v Lotyšku"
+    "v Bělorusku"
+    "v Něměcku"
+    "v Kazachstánu"
+    "v Rakousku"
+    "v Norsku"
+    "ve Francii"
+    "a Slovinsku"
+    "v Itálii"
+teams_of =
+    "USA"
+    "Kanady"
+    "Ruska"
+    "Švédska"
+    "Finska"
+    "Česka"
+    "Slovenska"
+    "Ukrajiny"
+    "Lotyšska"
+    "Běloruska"
+    "Dánska"
+    "Švýcarska"
+    "Německa"
+    "Kazachstánu"
+    "Rakouska"
+    "Norska"
+    "Francie"
+    "Slovinska"
+    "Itálie"
 class Player
     (@name, @team) ->
 class Nation
-    (@name, @abbr) ->
+    (@name, index) ->
         @xIndex = null
         @usesPlayers = []
         @providesPlayers = []
+        @abbr = team_abbrs[index]
+        @name_in = teams_in[index]
+        @name_of = teams_of[index]
 
 nations_assoc = {}
 nations = for team, index in teams
-    nations_assoc[team] = new Nation team, team_abbrs[index]
+    nations_assoc[team] = new Nation team, index
 teams = d3.csv.parse ig.data.hokejisti, (row) ->
     sources = for source in teams
         joudove = row[source].split ", "
@@ -65,7 +106,7 @@ container.append \div
         ..style \left -> "#{it.team.xIndex * cellSide}px"
         ..style \top  -> "#{it.source.yIndex * cellSide}px"
         ..attr \data-tooltip ->
-            out = "<b>#{it.team.name}, reprezentanti hrající ve #{it.source.name}</b><br />"
+            out = "<b>Reprezentanti #{it.team.name_of} hrající #{it.source.name_in}</b><br />"
             out += it.players.map (.name) .join "<br />" |> escape
             out
         ..style \background-color -> scale it.players.length
