@@ -1,16 +1,17 @@
 new Tooltip!watchElements!
 teams = <[USA Kanada Rusko Švédsko Finsko Česko Slovensko Ukrajina Lotyšsko Bělorusko Dánsko Švýcarsko Německo Kazachstán Rakousko Norsko Francie Slovinsko Itálie]>
-teams_flagh = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
+team_abbrs = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
 class Player
     (@name, @team) ->
 class Nation
-    (@name) ->
+    (@name, @abbr) ->
+        @xIndex = null
         @usesPlayers = []
         @providesPlayers = []
 
 nations_assoc = {}
-nations = for team in teams
-    nations_assoc[team] = new Nation team
+nations = for team, index in teams
+    nations_assoc[team] = new Nation team, team_abbrs[index]
 teams = d3.csv.parse ig.data.hokejisti, (row) ->
     sources = for source in teams
         joudove = row[source].split ", "
@@ -53,15 +54,21 @@ scale = d3.scale.linear!
 
 container = d3.select  ig.containers.base
 
-container
-    ..append \div
-        ..attr \class \content
-        ..selectAll \div.cell .data cells .enter!append \div
-            ..attr \class \cell
-            ..style \left -> "#{it.team.xIndex * cellSide}px"
-            ..style \top  -> "#{it.source.yIndex * cellSide}px"
-            ..attr \data-tooltip ->
-                out = "<b>#{it.team.name}, reprezentanti hrající ve #{it.source.name}</b><br />"
-                out += it.players.map (.name) .join "<br />" |> escape
-                out
-            ..style \background-color -> scale it.players.length
+container.append \div
+    ..attr \class \content
+    ..selectAll \div.cell .data cells .enter!append \div
+        ..attr \class \cell
+        ..style \left -> "#{it.team.xIndex * cellSide}px"
+        ..style \top  -> "#{it.source.yIndex * cellSide}px"
+        ..attr \data-tooltip ->
+            out = "<b>#{it.team.name}, reprezentanti hrající ve #{it.source.name}</b><br />"
+            out += it.players.map (.name) .join "<br />" |> escape
+            out
+        ..style \background-color -> scale it.players.length
+container.append \div
+    ..attr \class \header
+    ..selectAll \div.head .data nations.filter (.xIndex isnt null)
+        ..enter!append \div
+            ..attr \class -> "head ico #{it.abbr}"
+            ..style \left -> "#{it.xIndex * cellSide}px"
+            ..attr \data-tooltip (.name)

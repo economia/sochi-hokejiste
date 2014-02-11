@@ -14,12 +14,27 @@
         overflow hidden
     div.content
         position absolute
-        top 50px
+        top 25px
+        left 0px
+        background #f00
     div.cell
         position absolute
         width 37px
         height 37px
         border-radius 3px
-        border 1px solid #eee
 
+    div.head
+        position absolute
+        top 0px
+        width 22px
+        height 14px
+        margin-left 6px
+        border 1px solid #ddd
+        background-position center center
+        background-repeat no-repeat
+
+    for abbr in us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it
+        .ico.{abbr}
+            src = abbr + ".png"
+            background-image iurl(src)
 
