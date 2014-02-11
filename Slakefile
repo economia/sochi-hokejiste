@@ -14,7 +14,8 @@ externalScripts =
 externalStyles = []
 
 externalData =
-    hokejisti: "#__dirname/data/hokejisti.csv"
+    staty: "#__dirname/data/staty.csv"
+    kluby: "#__dirname/data/kluby.csv"
     style: "#__dirname/www/screen.css"
 
 preferScripts = <[ postInit.js _loadData.js ../data.js init.js _loadExternal.js]>
