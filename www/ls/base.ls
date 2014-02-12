@@ -104,6 +104,8 @@ teams_of =
     "Itálie"
 class Player
     (@name, @team) ->
+        @team ?= "bez kontraktu"
+
 class Nation
     (@name, index) ->
         @xIndex = null
