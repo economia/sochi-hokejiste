@@ -71,7 +71,7 @@ teams_in =
     "v české Tipsport extralize"
     "v slovenské Tipsport extralize"
     "v Metal Ligaen (Dánsko)"
-    "v švédské národní lize"
+    "v švýcarské národní lize"
     "v německé hokejové lize"
     "v kazašském hokejovém šampionátu"
     "v Erste Bank hokejové lize (Rakousko)"
