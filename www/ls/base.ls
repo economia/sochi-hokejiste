@@ -1,4 +1,5 @@
 new Tooltip!watchElements!
+sorting = <[ Kanada Rusko Švédsko USA Česko Finsko Švýcarsko Slovensko Norsko Lotyšsko Rakousko Slovinsko ]>
 teams_names =
     \USA
     \Kanada
@@ -135,7 +136,10 @@ draw = (type, sourceData, container) ->
     nations .= sort (a, b) ->
         | b.usesPlayers.length == 0 and a.usesPlayers.length > 0 => -1
         | b.usesPlayers.length > 0 and a.usesPlayers.length == 0 => +1
-        | b.providesPlayers.length - a.providesPlayers.length => that
+        | type == \nations
+            b.providesPlayers.length - a.providesPlayers.length
+        | type == \teams
+            (sorting.indexOf a.name) - (sorting.indexOf b.name)
     xIndex = 0
     yIndex = 0
     for nation in nations
