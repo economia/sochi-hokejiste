@@ -21,12 +21,25 @@ teams_names =
     \Itálie
     \NHL
     \KHL
-    \ELI
+    \SHL
     \AHL
     \NCAA
-    \NIC
-    \CZE
-    \SKE
+    \Bez
+    \TECZ
+    \TESK
+    \ML
+    \NL
+    \DEL
+    \KCH
+    \EBEL
+    \CHL
+    \AS
+    \SM
+    \ES
+    \1L
+    \VHL
+    \LM
+
 team_abbrs = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
 teams_in =
     "v USA"
@@ -48,14 +61,26 @@ teams_in =
     "ve Francii"
     "na Slovinsku"
     "v Itálii"
-    "v NHL"
-    "v KHL"
-    "v ELI"
-    "v AHL"
-    "v NCAA"
-    "kdoví kde"
-    "v České extralize"
-    "v Slovenské extralize"
+    "v National Hockey League (USA a Kanada)"
+    "v Kontinentální hokejové lize (Rusko a další)"
+    "ve švédské hokejové lize"
+    "v American hockey league (USA)"
+    "v National College Athletic Association (USA)"
+    "bez kontraktu"
+    "v české Tipsport extralize"
+    "v slovenské Tipsport extralize"
+    "v Metal Ligaen (Dánsko)"
+    "v švédské národní lize"
+    "v německé hokejové lize"
+    "v kazašském hokejovém šampionátu"
+    "v Erste Bank hokejové lize (Rakousko)"
+    "v Central hockey league (USA)"
+    "v Allsvenskan (2. švédská liga)"
+    "v SM Liiga (Finsko)"
+    "v Elitserien (Norsko)"
+    "v 1. české hokejové lize"
+    "v nižší ruská hokejová liga"
+    "v Ligue Magnus (Francie)"
 teams_of =
     "USA"
     "Kanady"
