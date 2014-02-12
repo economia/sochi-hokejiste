@@ -40,7 +40,7 @@ teams_names =
     \VHL
     \LM
 
-team_abbrs = <[us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it]>
+team_abbrs = <[us ca ru swe fi cz sk uk lo be ne sw de ka au no fr sl it]>
 teams_in =
     "v USA"
     "v Kanadě"
