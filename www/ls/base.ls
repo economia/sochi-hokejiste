@@ -141,7 +141,13 @@ draw = (type, sourceData, container) ->
         | type == \nations
             b.providesPlayers.length - a.providesPlayers.length
         | type == \teams
-            (sorting.indexOf a.name) - (sorting.indexOf b.name)
+            iA = sorting.indexOf a.name
+            iB = sorting.indexOf b.name
+            switch
+            | iA - iB => that
+            | iA != -1 => 1
+            | iB != -1 => -1
+            | _ => b.providesPlayers.length - a.providesPlayers.length
     xIndex = 0
     yIndex = 0
     for nation in nations
