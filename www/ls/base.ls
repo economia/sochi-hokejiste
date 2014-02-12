@@ -225,4 +225,4 @@ draw = (type, sourceData, container) ->
 
 draw \nations ig.data.staty, ig.containers.base
 
-draw \teams ig.data.kluby, ig.containers.states
+draw \teams ig.data.kluby, ig.containers.teams
