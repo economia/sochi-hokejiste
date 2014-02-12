@@ -36,7 +36,7 @@ teams_names =
     \AS
     \SM
     \ES
-    \1L
+    \1ČL
     \VHL
     \LM
 
@@ -64,7 +64,7 @@ teams_in =
     "v National Hockey League (USA a Kanada)"
     "v Kontinentální hokejové lize (Rusko a další)"
     "ve švédské hokejové lize"
-    "v American hockey league (USA)"
+    "v American Hockey League (USA)"
     "v National College Athletic Association (USA)"
     "bez kontraktu"
     "v české Tipsport extralize"
@@ -79,7 +79,7 @@ teams_in =
     "v SM Liiga (Finsko)"
     "v Elitserien (Norsko)"
     "v 1. české hokejové lize"
-    "v nižší ruská hokejová liga"
+    "v nižší ruské hokejové lize"
     "v Ligue Magnus (Francie)"
 teams_of =
     "USA"
@@ -187,6 +187,13 @@ draw = (type, sourceData, container) ->
                 ..attr \class -> "head ico #{it.abbr}"
                 ..style \left -> "#{it.xIndex * cellSide}px"
                 ..attr \data-tooltip (.name)
+    tooltip = ->
+        l = it.providesPlayers.length
+        name =
+            | l == 1 => "olympionik"
+            | l < 5 => "olympionici"
+            | _ => "olympioniků"
+        "Celkem #{l} #name hraje #{it.name_in}"
     sider = container.append \div
         ..attr \class \sider
         ..selectAll \div.side .data nations.filter (.yIndex isnt null)
@@ -195,10 +202,14 @@ draw = (type, sourceData, container) ->
                     | type == \nations => "side ico #{it.abbr}"
                     | otherwise => "side abbr"
                 ..style \top -> "#{it.yIndex * cellSide}px"
-                ..attr \data-tooltip (.name)
+                ..attr \data-tooltip tooltip
                 ..html ->
                     | type == \nations => null
                     | otherwise => it.name
+                ..append \div
+                    ..attr \class \count
+                    ..html -> it.providesPlayers.length
+                    ..attr \data-tooltip tooltip
 
 draw \nations ig.data.staty, ig.containers.base
 

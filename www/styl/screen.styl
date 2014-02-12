@@ -65,8 +65,19 @@
     div.side
         left 0px
         margin-top 11px
+        cursor help
         &.ico
             left 8px
+            .count
+                font-size 0.8em
+                position absolute
+                top -4px
+                left -31px
+                text-align right
+                width 24px
+
+        &.abbr .count
+            display none
 
     for abbr in us ca ru sw fi cz sk uk lo be ne swe de ka au no fr sl it
         .ico.{abbr}
