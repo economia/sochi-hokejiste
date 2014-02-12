@@ -163,7 +163,7 @@ draw = (type, sourceData, container) ->
         for {source, players} in sources
             cells.push {team, source, players}
 
-    cellSide = 40
+    cellSide = 37
     max = Math.max ...cells.map (.players.length)
     colorRange = ['rgb(255,237,160)','rgb(254,217,118)','rgb(254,178,76)','rgb(253,141,60)','rgb(252,78,42)','rgb(227,26,28)','rgb(189,0,38)','rgb(128,0,38)']
     colorDomain = colorRange.map (d, i) -> max * i / (colorRange.length - 2)
